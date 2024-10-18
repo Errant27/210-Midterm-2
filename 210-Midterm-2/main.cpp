@@ -98,14 +98,12 @@ public:
     
         for (int i = 1; i < pos; i++){
             if (!temp) {
-                cout << "Position doesn't exist." << endl;
                 return;
             }
             else
                 temp = temp->next;
         }
         if (!temp) {
-            cout << "Position doesn't exist." << endl;
             return;
         }
     
@@ -117,6 +115,7 @@ public:
         Node* tempPrev = temp->prev;
         tempPrev->next = temp->next;
         temp->next->prev = tempPrev;
+        cout << setw(W) << temp->name << " left the line" << endl;
         delete temp;
     }
 
@@ -128,6 +127,7 @@ public:
             tail->next = newNode;
             newNode->prev = tail;
             tail = newNode;
+            cout << setw(W) << newNode->name << " added to back of line" << endl;
         }
     }
     
@@ -139,6 +139,7 @@ public:
             newNode->next = head;
             head->prev = newNode;
             head = newNode;
+            cout << setw(W) << newNode->name << " added to front of line" << endl;
         }
     }
     
@@ -157,6 +158,7 @@ public:
         }
         else
             head = tail = nullptr;
+        cout << setw(W) << temp->name << " helped at front of line" << endl;
         delete temp;
     }
 
@@ -173,6 +175,7 @@ public:
         }
         else
             head = tail = nullptr;
+        cout << setw(W) << temp->name << " leaves the end of the line" << endl;
         delete temp;
     }
 
@@ -230,35 +233,38 @@ int main() {
         list.push_back(name);
     }
     
-    cout << "Starting Line:" << endl;
+    cout << "Starting Line:" << endl;    // Starting line outputted
         list.print();
     
-    for (int i = 0; i < 20; ++i) {
-        static int step = 1;
+    for (int i = 0; i < 20; ++i) {    // for loop to show 20 time steps
+        static int step = 1;    // static int to keep track of
         
         cout << "Time step #" << step << endl;
         int chance = rand_num();
         
         cout << "---------" << endl;
         if (chance <= 40) {
-            cout << setw(W) << "Front customer helped" << endl;
             list.pop_front();
         }
         if (chance <= 60) {
             reader >> name;
             list.push_back(name);
-            cout << setw(W) << name << " added to end of line" << endl;
         }
         if (chance <= 20) {
-            cout << setw(W) << "Back customer left" << endl;
+//            cout << setw(W) << "Back customer left" << endl;
             list.pop_back();
         }
         if (chance <= 10) {
-            list.delete_pos(2);
+            random_device randPos;
+            uniform_int_distribution<int>range(1, 10);
+            int pos = range(randPos);
+            
+            list.delete_pos(pos);
             reader >> name;
+            cout << setw(W) << "(VIP) ";
             list.push_front(name);
-            cout << setw(W) << "Customer left" << endl;
-            cout << setw(W) << name << " (VIP) joined line" << endl;
+           
+            
             // Event D & Event E
         }
         cout << "---------" << endl;
@@ -272,7 +278,7 @@ int main() {
         return 0;
     }
 
-int rand_num() {
+int rand_num() {    // Function to generate random number
     random_device randNum;
     uniform_int_distribution<int>range(1, 100);
     int num = range(randNum);
