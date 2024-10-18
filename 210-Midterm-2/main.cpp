@@ -3,10 +3,11 @@
 #include <iostream>
 #include <random>
 #include <fstream>
+#include <iomanip>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
-
+const int W = 3;
 int rand_num();
 
 class DoublyLinkedList {
@@ -84,7 +85,7 @@ public:
 
     void delete_pos(int pos) {
         if (!head) {
-            cout << "List is empty." << endl;
+            cout << "Line is empty." << endl;
             return;
         }
     
@@ -144,7 +145,7 @@ public:
     void pop_front() {
 
         if (!head) {
-            cout << "List is empty." << endl;
+            cout << "Lne is empty." << endl;
             return;
         }
 
@@ -161,7 +162,7 @@ public:
 
     void pop_back() {
         if (!tail) {
-            cout << "List is empty." << endl;
+            cout << "Line is empty." << endl;
             return;
         }
         Node * temp = tail;
@@ -185,7 +186,7 @@ public:
     void print() {
         Node* current = head;
         if (!current) {
-            cout << "List is empty." << endl;
+            cout << "Line is empty." << endl;
             return;
         }
         while (current) {
@@ -198,7 +199,7 @@ public:
     void print_reverse() {
         Node* current = tail;
         if (!current) {
-            cout << "List is empty." << endl;
+            cout << "Line is empty." << endl;
             return;
         }
         while (current) {
@@ -211,52 +212,60 @@ public:
 
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS << endl;  // dummy statement to avoid compiler warning
+
+    fstream reader;    // file reader to get the names
+    string name;    // string name to store the value of
+    string fileName = "names.txt";    // name of file stored in string
+    DoublyLinkedList list;    // DoublyLinked list object
     
-    fstream reader;
-    string name;
-    string fileName = "names.txt";
     
-    reader.open(fileName);
+    reader.open(fileName);    // file opened
     
-    while (!reader) {
+    while (!reader) {    // Error message if file fails to open
         cout << "Error opening file." << endl;
     }
-    
-    DoublyLinkedList list;
-    for (int i = 0; i < 5; ++i) {
+
+    for (int i = 0; i < 5; ++i) {    // for loop to build the first five customers in line
         reader >> name;
         list.push_back(name);
     }
     
-    cout << "Line:" << endl;
+    cout << "Starting Line:" << endl;
         list.print();
     
     for (int i = 0; i < 20; ++i) {
         static int step = 1;
         
-        cout << "Time step # " << step << endl;
+        cout << "Time step #" << step << endl;
         int chance = rand_num();
         
+        cout << "---------" << endl;
         if (chance <= 40) {
+            cout << setw(W) << "Front customer helped" << endl;
             list.pop_front();
         }
         if (chance <= 60) {
             reader >> name;
             list.push_back(name);
+            cout << setw(W) << name << " added to end of line" << endl;
         }
         if (chance <= 20) {
+            cout << setw(W) << "Back customer left" << endl;
             list.pop_back();
         }
         if (chance <= 10) {
-          
-            
+            list.delete_pos(2);
+            reader >> name;
+            list.push_front(name);
+            cout << setw(W) << "Customer left" << endl;
+            cout << setw(W) << name << " (VIP) joined line" << endl;
             // Event D & Event E
         }
+        cout << "---------" << endl;
+        cout << "Resulting Line:" << endl;
         list.print();
         step++;
     }
-   
-        
         
     reader.close();
     
