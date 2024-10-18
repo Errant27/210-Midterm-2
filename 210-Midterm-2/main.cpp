@@ -219,7 +219,7 @@ int main() {
     reader.open(fileName);
     
     while (!reader) {
-        cout << "Error opening file" << endl;
+        cout << "Error opening file." << endl;
     }
     
     DoublyLinkedList list;
@@ -230,9 +230,36 @@ int main() {
     
     cout << "Line:" << endl;
         list.print();
+    
+    for (int i = 0; i < 20; ++i) {
+        static int step = 1;
+        
+        cout << "Time step # " << step << endl;
+        int chance = rand_num();
+        
+        if (chance <= 40) {
+            list.pop_front();
+        }
+        if (chance <= 60) {
+            reader >> name;
+            list.push_back(name);
+        }
+        if (chance <= 20) {
+            list.pop_back();
+        }
+        if (chance <= 10) {
+          
+            
+            // Event D & Event E
+        }
+        list.print();
+        step++;
+    }
+   
         
         
-        
+    reader.close();
+    
         return 0;
     }
 
@@ -243,4 +270,10 @@ int rand_num() {
     
     return num;
 }
+
+// Event A: 40%, front helped (pop front)
+// Event B: 60%, joins end of line (append node)
+// Event C: 20%, end of line leaves (pop back)
+// Event D: 10% customer leaves (delete pos)
+// Event E: 10% VIP enters and oges to front (add front)
 
