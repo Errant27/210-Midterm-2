@@ -7,6 +7,8 @@ using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
+int rand_num();
+
 class DoublyLinkedList {
 private:
     struct Node {
@@ -187,7 +189,7 @@ public:
             return;
         }
         while (current) {
-            cout << current->name << " ";
+            cout << current->name << endl;
             current = current->next;
         }
         cout << endl;
@@ -205,30 +207,40 @@ public:
         }
         cout << endl;
     }
-    
-    int prob() {
-        random_device randNum;
-        uniform_int_distribution<int>range(1, 100);
-        int num = range(randNum);
-        
-        return num;
-    }
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS << endl;  // dummy statement to avoid compiler warning
     
+    fstream reader;
+    string name;
+    string fileName = "names.txt";
     
-//    for (int i = 0; i < 20; i++) {
-//        int chance;
-//        chance = prob();
-//
-//        if (chace <= 40);
-//    }
+    reader.open(fileName);
     
+    while (!reader) {
+        cout << "Error opening file" << endl;
+    }
+    
+    DoublyLinkedList list;
+    for (int i = 0; i < 5; ++i) {
+        reader >> name;
+        list.push_back(name);
+    }
+    
+    cout << "Line:" << endl;
+        list.print();
+        
+        
+        
+        return 0;
+    }
 
+int rand_num() {
+    random_device randNum;
+    uniform_int_distribution<int>range(1, 100);
+    int num = range(randNum);
     
-    
-    
-    return 0;
+    return num;
 }
+
