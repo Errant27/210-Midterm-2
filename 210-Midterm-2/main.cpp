@@ -1,6 +1,8 @@
 // 210 | Midterm #1 | Neil Orton
 // IDE used: Xcode
 #include <iostream>
+#include <random>
+#include <fstream>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -8,11 +10,11 @@ const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 class DoublyLinkedList {
 private:
     struct Node {
-        int data;
+        string name;
         Node* prev;
         Node* next;
-        Node(int val, Node* p = nullptr, Node* n = nullptr) {
-            data = val;
+        Node(string val, Node* p = nullptr, Node* n = nullptr) {
+            name = val;
             prev = p;
             next = n;
         }
@@ -24,7 +26,7 @@ private:
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
-    void insert_after(int value, int position) {
+    void insert_after(string value, int position) {
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
             return;
@@ -55,12 +57,12 @@ public:
         temp->next = newNode;
     }
 
-    void delete_val(int value) {
+    void delete_val(string name) {
         if (!head) return;
 
         Node* temp = head;
         
-        while (temp && temp->data != value)
+        while (temp && temp->name != name)
             temp = temp->next;
 
         if (!temp) return;
@@ -115,7 +117,7 @@ public:
         delete temp;
     }
 
-    void push_back(int v) {
+    void push_back(string v) {
         Node* newNode = new Node(v);
         if (!tail)
             head = tail = newNode;
@@ -126,7 +128,7 @@ public:
         }
     }
     
-    void push_front(int v) {
+    void push_front(string v) {
         Node* newNode = new Node(v);
         if (!head)
             head = tail = newNode;
@@ -185,7 +187,7 @@ public:
             return;
         }
         while (current) {
-            cout << current->data << " ";
+            cout << current->name << " ";
             current = current->next;
         }
         cout << endl;
@@ -198,16 +200,35 @@ public:
             return;
         }
         while (current) {
-            cout << current->data << " ";
+            cout << current->name << " ";
             current = current->prev;
         }
         cout << endl;
+    }
+    
+    int prob() {
+        random_device randNum;
+        uniform_int_distribution<int>range(1, 100);
+        int num = range(randNum);
+        
+        return num;
     }
 };
 
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    
+    
+//    for (int i = 0; i < 20; i++) {
+//        int chance;
+//        chance = prob();
+//
+//        if (chace <= 40);
+//    }
+    
 
+    
+    
     
     return 0;
 }
