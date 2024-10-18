@@ -239,22 +239,22 @@ int main() {
     for (int i = 0; i < 20; ++i) {    // for loop to show 20 time steps
         static int step = 1;    // static int to keep track of
         
-        cout << "Time step #" << step << endl;
-        int chance = rand_num();
+        cout << "Time step #" << step << endl;    // Time step number outputed
+        int event = rand_num();    // event generated from random number function
         
-        cout << "---------" << endl;
-        if (chance <= 40) {
+        cout << "---------" << endl;    // updates message box
+        cout << "Updates:" << endl;
+        if (event <= 40) {    // if number generated is less or equal to 40, customer at front of line is helped
             list.pop_front();
         }
-        if (chance <= 60) {
+        if (event <= 60) {    // if number generated is less or equal to 60, customer added to back of line
             reader >> name;
             list.push_back(name);
         }
-        if (chance <= 20) {
-//            cout << setw(W) << "Back customer left" << endl;
+        if (event <= 20) {    // if number generated is less or equal to 20, customer at back of line leaves
             list.pop_back();
         }
-        if (chance <= 10) {
+        if (event <= 10) {    // if number generated is less or equal to 10, VIP enters and a customer leaves
             random_device randPos;
             uniform_int_distribution<int>range(1, 10);
             int pos = range(randPos);
@@ -263,9 +263,6 @@ int main() {
             reader >> name;
             cout << setw(W) << "(VIP) ";
             list.push_front(name);
-           
-            
-            // Event D & Event E
         }
         cout << "---------" << endl;
         cout << "Resulting Line:" << endl;
